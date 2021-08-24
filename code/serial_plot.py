@@ -60,7 +60,12 @@ class serialPlot:
                     self.data[i].append(value)
                 self.isReceiving = True
                 # print(self.rawData)
-    
+            except IOError as exc:
+                try:
+                    self.serialConnection = serial.Serial(serialPort, serialBaud, timeout=4)
+                    print('ReConnected to ' + str(serialPort) + ' at ' + str(serialBaud) + ' BAUD.')
+                except:
+                    print("Failed to Reconnect with " + str(serialPort) + ' at ' + str(serialBaud) + ' BAUD.')
 
     def close(self):
         self.isRun = False
